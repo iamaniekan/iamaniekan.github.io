@@ -36,7 +36,9 @@ a {
 strong {
   font-weight:600;
 }
-
+b{
+  color: var(--dark);
+}
 table {
   font-family: var(--summary);
 }
@@ -76,7 +78,7 @@ table td{
   font-family: var(--title);
 }
 .card-footer {
-  background-color: var(--white);
+  background-color: var(--grey);
 }
 .card:hover{
   transform: scale(1.05);
@@ -138,17 +140,81 @@ code {
   font-size: small;
 }
 
+.button-d {
+  background-color: var(--grey);
+  border: 2px solid #000;
+  border-radius: 30px;
+  box-shadow: #233044 4px 4px 0 0;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-d:hover {
+  background-color: #fff;
+  color: #233044;
+}
+
+.button-d:active {
+  box-shadow: #233044 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .button-d {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
+
+.hero {
+  background: #f2f2f2;
+}
+
+.home-social {
+  height: max-content;
+  position: absolute;
+  left: -3rem;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  display: grid;
+  row-gap: 1rem;
+}
+
+.home-social-link {
+  background-color: var(--dark);
+  color: var(--grey);
+  font-size: 1.25rem;
+  padding: 6px;
+  display: grid;
+  place-items: center;
+  transition: background-color .3s;
+}
+
+.home-social-link:hover{
+  background-color: var(--dark);
+}
 
 /********************* Navbar *********************/
 
 .navbar {
-  background: var(--white) !important;
+  background-color: #ebebeb;
   color: var(--dark);
   font-family: var(--title);
 }
 .navbar-nav .nav-item .nav-link {
     color: var(--grey);
-    font-weight: 300;
+    font-weight: 500;
     transition: color 1s;
     display: block;
     position: relative;
@@ -164,7 +230,7 @@ code {
   left: 0;
   width: 100%;
   height: 0.1em;
-  background-color: var(--red);
+  background-color: var(--grey);
   opacity: 0;
   transition: opacity 300ms, transform 300ms;
 }
@@ -180,7 +246,7 @@ code {
 
 .name {
   font-family: var(--title);
-  font-weight: 800;
+  font-weight: 500;
 }
 
 .bio {
@@ -321,6 +387,15 @@ a:hover {
   transition: color .5s;
 }
 
+.footer{
+  color: white;
+}
+
+.footer-name{
+  font-family: var(--title);
+  font-weight: 700;
+}
+
 
 /********************* Linked Header *********************/
 
@@ -392,4 +467,17 @@ button.anchor {
   padding: 0.4rem 0.7rem;
   border-radius: 5px;
   z-index: 1;
+}
+
+/********************* Newsletter *********************/
+
+.form-control{
+  height: 70px;
+  border-color: #fff;
+  border-radius: 0;
+}
+
+.form-control:focus{
+  box-shadow: none;
+  border: 2px solid #243c4f;
 }

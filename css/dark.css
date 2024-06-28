@@ -1,16 +1,67 @@
-html {
-    background-color: #171717 !important;
+:root {
+    --black: #1f1f1f;
 }
+
 html {
-    filter: invert(100%) hue-rotate(180deg) brightness(105%) contrast(85%);
-    -webkit-filter: invert(100%) hue-rotate(180deg) brightness(105%) contrast(85%);
+    background-color: var(--black) !important;
 }
+
 body {
-    background-color: #FFF !important;
+    background-color: #2b2b2b !important; 
+    color: #e0e0e0 !important; 
 }
-img,
-video,
-body * [style*="background-image"] {
-    filter: hue-rotate(180deg) contrast(100%) invert(100%);
-    -webkit-filter: hue-rotate(180deg) contrast(100%) invert(100%);
+
+a {
+    color: #99c7ff !important; 
+}
+
+a:hover {
+    color: #57a0d4 !important; 
+}
+
+h1, h2, h3, h4, h5, h6, b, .nav-link, .btn {
+    color: #ffffff !important; 
+}
+
+p {
+    color: #cfcfcf !important; 
+}
+
+.button {
+    background-color: #454545 !important; 
+    color: #ffffff !important; 
+}
+
+.button:hover {
+    background-color: #5f5f5f !important; 
+}
+
+.card {
+    background-color: #333333 !important; 
+    color: #e0e0e0 !important; 
+}
+
+.card:hover {
+    background-color: #434343 !important; 
+}
+
+.navbar {
+    background-color: var(--black) !important; 
+    color: #e0e0e0 !important; 
+}
+
+.footer-social a, .footer-social i {
+    color: #e0e0e0 !important; 
+}
+
+.footer-social a:hover, .footer-social i:hover {
+    color: #99c7ff !important; 
+}
+
+.hero, section {
+    background-color: var(--black) !important;
+    color: #efefef !important;
+}
+.serif{
+    color: #ffffff !important;
 }
