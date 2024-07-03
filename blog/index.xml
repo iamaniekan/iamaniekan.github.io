@@ -2,12 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>📝 Blog on Aniekan Akpan</title>
-    <link>https://iamaniekan.github.io/blog/</link>
+    <link>http://localhost:1313/blog/</link>
     <description>Recent content in 📝 Blog on Aniekan Akpan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Aniekan Akpan ©</copyright>
-    <lastBuildDate></lastBuildDate>
-    <atom:link href="https://iamaniekan.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 03 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux Bash Script for User Creation </title>
+      <link>http://localhost:1313/blog/linux-user-creation-bash-script/</link>
+      <pubDate>Wed, 03 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/linux-user-creation-bash-script/</guid>
+      <description>HNG 11 Internship Stage two task for DevOps interns</description>
+    </item>
   </channel>
 </rss>

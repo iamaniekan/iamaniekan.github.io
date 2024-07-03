@@ -1,0 +1,31 @@
+/* custom.css */
+
+/* Ensure code blocks are properly formatted */
+pre code {
+    display: block;
+    padding: 1em;
+    background: #2e2e2e; /* Background color to match the Monokai theme */
+    overflow-x: auto;    /* Ensure code blocks are scrollable horizontally */
+    font-size: 18px;     /* Set the font size for better readability */
+    border-radius: 4px;  /* Optional: to add rounded corners */
+  }
+  
+  /* Adjust the padding and margins for better spacing */
+  pre {
+    margin: 1.5em 0;     /* Space around code blocks */
+    padding: 1em;        /* Padding inside the code block */
+    overflow: auto;      /* Ensure code blocks are scrollable if needed */
+    background: #2e2e2e; /* Background color to match the Monokai theme */
+    border-radius: 4px;  /* Optional: to add rounded corners */
+  }
+  
+  /* Ensure inline code is properly formatted */
+  code {
+    background: #e4e4e4; /* Background color to match the Monokai theme */
+    color: #222221;      /* Text color to match the Monokai theme */
+    padding: 0.2em 0.4em; /* Padding inside inline code */
+    border-radius: 3px;  /* Optional: to add rounded corners */
+    font-size: 14px;     /* Set the font size for better readability */
+  }
+
+  
