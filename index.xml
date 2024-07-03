@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Aniekan Akpan</title>
-    <link>http://localhost:1313/</link>
+    <link>https://iamaniekan.github.io/</link>
     <description>Recent content on Aniekan Akpan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Aniekan Akpan ©</copyright>
     <lastBuildDate>Wed, 03 Jul 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://iamaniekan.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux Bash Script for User Creation </title>
-      <link>http://localhost:1313/blog/linux-user-creation-bash-script/</link>
+      <link>https://iamaniekan.github.io/blog/linux-user-creation-bash-script/</link>
       <pubDate>Wed, 03 Jul 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blog/linux-user-creation-bash-script/</guid>
+      <guid>https://iamaniekan.github.io/blog/linux-user-creation-bash-script/</guid>
       <description>HNG 11 Internship Stage two task for DevOps interns</description>
     </item>
     <item>
       <title>About Aniekan</title>
-      <link>http://localhost:1313/about/</link>
+      <link>https://iamaniekan.github.io/about/</link>
       <pubDate>Thu, 01 Jan 2015 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/about/</guid>
+      <guid>https://iamaniekan.github.io/about/</guid>
       <description>Here&amp;rsquo;s a little about me you should know 😊</description>
     </item>
   </channel>
