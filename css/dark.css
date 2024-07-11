@@ -65,3 +65,8 @@ p {
 .serif{
     color: #ffffff !important;
 }
+
+blockquote{
+    background-color: #212529 !important;
+    border-left-color: #86b7fe !important;
+}

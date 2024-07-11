@@ -477,3 +477,18 @@ button.anchor {
   box-shadow: none;
   border: 2px solid #243c4f;
 }
+
+/* Dark mode icon for mobile view */
+.nav-item.d-lg-none {
+  position: absolute;
+  right: 5rem; 
+  top: 10px;
+  display: block !important;
+}
+
+/* Dark mode icon for desktop view */
+.nav-item.d-none.d-lg-block {
+  display: block !important;
+}
+
+
