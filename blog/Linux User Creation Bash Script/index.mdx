@@ -1,0 +1,236 @@
+---
+title: "Linux Bash Script for User Creation "
+date: 2024-07-03
+status: "devops"
+weight: 2
+summary: "HNG 11 Internship Stage two task for DevOps interns"
+draft: false
+blog_tags: ["HNG Internship Task"]
+links:
+    another_link:
+        text: "Complete Project"
+        icon: "fab alt brands fa-github"
+        href: "https://github.com/iamaniekan/bash-task"
+        weight: 1
+---
+
+This is the DevOps Stage one task of the [HNG Internship](https://hng.tech/internship). The Internship has been challenging so far. You can learn more about HNG Internship [here](https://hng.tech/premium).
+
+Let's get into the task and review my solution.
+
+# Task
+Your company has employed many new developers. As a SysOps engineer, write a bash script called `create_users.sh` that reads a text file containing the employee’s usernames and group names, where each line is formatted as `user;groups`.
+The script should create users and groups as specified, set up home directories with appropriate permissions and ownership, generate random passwords for the users, and log all actions to `/var/log/user_management.log`. Additionally, store the generated passwords securely in `/var/secure/user_passwords.txt`.
+Ensure error handling for scenarios like existing users and provide clear documentation and comments within the script.
+
+---
+
+### Requirements:
+- Each User must have a personal group with the same group name as the username, this group name will not be written in the text file.
+- A user can have multiple groups, each group delimited by comma ","
+- Usernames and user groups are separated by semicolon ";"- Ignore whitespace
+
+e.g.
+```bash
+light; sudo,dev,www-data
+idimma; sudo
+mayowa; dev,www-data
+```
+For the first line, light is username and groups are sudo, dev, www-data
+
+---
+
+# My Solution
+To get optimal solution to the task, we need to understand what is required to be done. Here is a brief summary outlining what needs to be done.
+
+---
+
+- Create a file named `create_user.sh`.
+- Create an input file containing employee username and group names formatted as `user;group`.
+- Extract the username and groups.
+- Create the user and the groups.
+- Set up home directories with appropriate permissions and ownership.
+- Generate random password for the users.
+- Log all actions to `/var/log/user_management.log`.
+- Store the generated passwords securely in `/var/secure/user_passwords.txt`.
+- Handle errors for scenarios like existing users.
+
+---
+
+Now let's create the file and write a script implementing the functional requirements highlighted above.
+
+I would explain each part of the script, highlighting the key functions and commands used. You can get the full implementation [HERE](https://github.com/iamaniekan/bash-task).
+
+### Shebang
+```bash
+#!/bin/bash
+```
+ This is the shebang line, indicating that the script should be executed using the Bash shell. This ensures the script runs in a bash environment, which is necessary for the syntax and commands used.
+
+### Define Log and Password File Paths
+```bash
+LOG_FILE="/var/log/user_management.log"
+PASSWORD_FILE="/var/secure/user_passwords.csv"
+```
+These lines define the paths for the log file and the password file. Using variables for these paths makes the script more readable and easier to maintain.
+
+### Log Message Function
+```bash
+log_message() {
+    MESSAGE=$1
+    echo "$(date '+%Y-%m-%d %H:%M:%S') : $MESSAGE" >> "$LOG_FILE"
+}
+```
+This function logs messages to the log file with a timestamp. It takes a single argument (`$1`), the message to be logged, and appends it to the log file with a formatted date and time.
+
+### Setup Files Function
+```bash
+setup_files() {
+    touch "$LOG_FILE" "$PASSWORD_FILE"
+    chmod 600 "$PASSWORD_FILE"
+    log_message "Script started"
+}
+```
+This function ensures the necessary files exist and have the correct permissions. 
+  - `touch` creates the files if they do not exist.
+  - `chmod 600` sets the password file to be readable and writable only by the file owner, ensuring security.
+  - `log_message "Script started"` logs the start of the script.
+
+### Check Input File Function
+```bash
+check_input_file() {
+    if [[ -z "$1" ]]; then
+        log_message "No input file provided"
+        exit 1
+    fi
+    
+    INPUT_FILE="$1"
+    
+    if [[ ! -f "$INPUT_FILE" ]]; then
+        log_message "Input file does not exist: $INPUT_FILE"
+        exit 1
+    fi
+}
+```
+This function checks if an input file is provided and if it exists.
+  - `[[ -z "$1" ]]`: Checks if the first argument is empty.
+  - `[[ ! -f "$INPUT_FILE" ]]`: Checks if the specified file does not exist.
+  - Logs appropriate messages and exits with a status code of `1` if checks fail.
+
+### Sanitize Input Function
+```bash
+sanitize_input() {
+    INPUT="$1"
+    echo "$INPUT" | sed 's/[^a-zA-Z0-9,;]//g'
+}
+```
+This function sanitizes the input to remove any characters that are not alphanumeric, commas, or semicolons. This is important for security and to ensure the script processes input correctly.
+
+### Create User and Groups Function
+```bash
+create_user_and_groups() {
+     USERNAME="$1"
+     GROUPS="$2"
+    
+    if id "$USERNAME" &>/dev/null; then
+        log_message "User $USERNAME already exists"
+        return
+    fi
+    
+    useradd -m -s /bin/bash "$USERNAME"
+    if [[ $? -ne 0 ]]; then
+        log_message "Failed to create user $USERNAME"
+        return
+    fi
+    log_message "Created user $USERNAME"
+    
+    groupadd "$USERNAME"
+    usermod -aG "$USERNAME" "$USERNAME"
+    
+    IFS=',' read -ra GROUP_LIST <<< "$GROUPS"
+    for group in "${GROUP_LIST[@]}"; do
+        group=$(echo "$group" | xargs)
+        if ! getent group "$group" &>/dev/null; then
+            groupadd "$group"
+        fi
+        usermod -aG "$group" "$USERNAME"
+    done
+    
+    generate_password "$USERNAME"
+}
+```
+
+  - `USERNAME="$1"` and `GROUPS="$2"`: Assign the first and second arguments to `USERNAME` and `GROUPS`.
+  - `if id "$USERNAME" &>/dev/null; then ... fi`: Check if the user already exists, and log a message if so.
+  - `useradd -m -s /bin/bash "$USERNAME"`: Create the user with a home directory and set the default shell to Bash.
+  - `groupadd "$USERNAME"` and `usermod -aG "$USERNAME" "$USERNAME"`: Create a personal group for the user and add the user to it.
+  - `IFS=',' read -ra GROUP_LIST <<< "$GROUPS"`: Split the groups by comma into an array.
+  - The `for` loop processes each group, creating it if it does not exist and adding the user to it.
+  - `generate_password "$USERNAME"`: Call the function to generate and set a random password for the user.
+
+### Generate Password Function
+```bash
+generate_password() {
+    USERNAME="$1"
+    PASSWORD=$(openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c 12)
+    echo "$USERNAME:$PASSWORD" | chpasswd
+
+    echo "$USERNAME,$PASSWORD" >> "$PASSWORD_FILE"
+    chmod 600 "$PASSWORD_FILE"
+    log_message "Password setup for $USERNAME is successful"
+}
+```
+
+  - `USERNAME="$1"`: Assign the first argument to `USERNAME`.
+  - `PASSWORD=$(openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c 12)`: Generate a random password with 12 alphanumeric characters.
+  - `echo "$USERNAME:$PASSWORD" | chpasswd`: Set the password for the user.
+  - `echo "$USERNAME,$PASSWORD" >> "$PASSWORD_FILE"`: Append the username and password to the password file.
+  - `chmod 600 "$PASSWORD_FILE"`: Ensure the password file has the correct permissions.
+  - `log_message "Password setup for $USERNAME is successful"`: Log a success message.
+
+### Process File Function
+```bash
+process_file() {
+    while IFS= read -r line; do
+        [[ -z "$line" ]] && continue
+        line=$(sanitize_input "$line")
+        USERNAME=$(echo "$line" | cut -d ';' -f 1)
+        GROUPS=$(echo "$line" | cut -d ';' -f 2)
+        create_user_and_groups "$USERNAME" "$GROUPS" &
+    done < "$INPUT_FILE"
+    wait
+}
+```
+
+  - `while IFS= read -r line; do ... done < "$INPUT_FILE"`: Read the input file line by line.
+  - `[[ -z "$line" ]] && continue`: Skip empty lines.
+  - `line=$(sanitize_input "$line")`: Sanitize the input line.
+  - `USERNAME=$(echo "$line" | cut -d ';' -f 1)` and `GROUPS=$(echo "$line" | cut -d ';' -f 2)`: Extract the username and groups.
+  - `create_user_and_groups "$USERNAME" "$GROUPS" &`: Create the user and groups in the background.
+  - `wait`: Wait for all background processes to finish.
+
+### Main Function
+```bash
+main() {
+    setup_files
+    check_input_file "$1"
+    process_file
+    log_message "Script ended"
+}
+```
+
+  - `setup_files`: Prepare the log and password files.
+  - `check_input_file "$1"`: Validate the input file provided as the first argument.
+  - `process_file`: Process the input file to create users and groups.
+  - `log_message "Script ended"`: Log the end of the script.
+
+### Run the Main Function
+```bash
+main "$1"
+```
+Call the `main` function with the first argument passed to the script, orchestrating the entire process.
+
+### Conclusion
+- The script is designed to be modular, with clear separation of concerns for each task (logging, file setup, user creation, etc.).
+- Error handling and logging are implemented to ensure smooth operation and easy troubleshooting.
+- Permissions and security considerations are addressed, especially for the password file.
